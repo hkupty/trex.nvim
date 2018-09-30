@@ -3,23 +3,21 @@ local nvim = vim.api
 local utils = {}
 
 utils.get_ns = function()
-  -- TODO silent normal!
-  nvim.nvim_feedkeys("mxggf w\"sy$`x", "", "")
+  nvim.nvim_feedkeys("mxggf w\"sy$`x", "x", "")
   cmd_out = nvim.nvim_eval("@s")
 
   return cmd_out
 end
 
 utils.get_current_parens = function()
-  -- TODO silent normal!
-  nvim.nvim_feedkeys("mx%\"sy%`x", "", "")
+  nvim.nvim_feedkeys("mx%\"sy%`x", "x", "")
   cmd_out = nvim.nvim_eval("@s")
 
   return cmd_out
 end
 
 utils.get_outer_parens = function()
-  nvim.nvim_feedkeys("mx?^(\\"sya(`x'", "", "")
+  nvim.nvim_feedkeys("mx?^(\\"sya(`x'", "x", "")
   nvim.nvim_command("nohl")
 
   cmd_out = nvim.nvim_eval("@s")
@@ -27,7 +25,7 @@ utils.get_outer_parens = function()
 end
 
 utils.get_visual = function()
-  nvim.nvim_feedkeys("gv\"sy", "", "")
+  nvim.nvim_feedkeys("gv\"sy", "x", "")
 
   cmd_out = nvim.nvim_eval("@s")
   return cmd_out
@@ -37,7 +35,7 @@ end
 local clojure = {}
 
 clojure.require_ns = function()
-  nvim.nvim_feedkeys("mx%\"sy%`x", "", "")
+  nvim.nvim_feedkeys("mx%\"sy%`x", "x", "")
   cmd_out = nvim.nvim_eval("@s")
 
   data = "(require '" .. cmd_out .. ")"
