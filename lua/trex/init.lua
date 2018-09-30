@@ -5,7 +5,8 @@ local trex = {
   data = {
     history = {},
     cursor = 0
-  }
+  },
+  fts = require("trex.fts")
 }
 
 trex.ll.bufdata = function()
