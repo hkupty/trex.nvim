@@ -18,6 +18,21 @@ utils.get_current_parens = function()
   return cmd_out
 end
 
+utils.get_outer_parens = function()
+  nvim.nvim_feedkeys("mx?^(\\"sya(`x'", "", "")
+  nvim.nvim_command("nohl")
+
+  cmd_out = nvim.nvim_eval("@s")
+  return cmd_out
+end
+
+utils.get_visual = function()
+  nvim.nvim_feedkeys("gv\"sy", "", "")
+
+  cmd_out = nvim.nvim_eval("@s")
+  return cmd_out
+end
+
 
 local clojure = {}
 
@@ -42,20 +57,28 @@ clojure.lein_require = function()
   return
 end
 
+clojure.lein_require_current_file = function()
+  data = "(require '" .. utils.get_ns() .. " :reload)"
+  iron.ll.send_to_repl("clojure", data)
+  return
+end
+
 clojure.lein_import = function()
-    data = "(import '" .. utils.get_current_parens() .. ")"
+  data = "(import '" .. utils.get_current_parens() .. ")"
+  iron.ll.send_to_repl("clojure", data)
+  return
+end
+
+clojure.lein_send = function()
+  data = utils.get_outer_parens()
+  iron.ll.send_to_repl("clojure", data)
+  return
+end
+
+clojure.lein_send_visual = function()
+  data = utils.get_visual()
   iron.ll.send_to_repl("clojure", data)
   return
 end
 
 return clojure
-
-
-    -- ('<leader>sr', 'require-file', lein_require_file),
-    -- ('<leader>sR', 'require-with-ns', lein_require_with_ns),
-    -- ('<leader>s.', 'prompt-require', lein_prompt_require),
-    -- ('<leader>s/', 'prompt-require-as', lein_prompt_require_as),
-    -- ('<leader>ss', 'send-block', lein_send),
-
-    -- ('<leader>mf', 'midje-load-facts', midje_load_facts),
-    -- ('<leader>ma', 'midje-autotest', midje_autotest),
