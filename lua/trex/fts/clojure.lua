@@ -3,7 +3,7 @@ local nvim = vim.api
 local utils = {}
 
 utils.get_ns = function()
-  nvim.nvim_feedkeys("mxggf w\"sy$`x", "x", "")
+  nvim.nvim_feedkeys("mxggf w\"syw`x", "x", "")
   cmd_out = nvim.nvim_eval("@s")
 
   return cmd_out
