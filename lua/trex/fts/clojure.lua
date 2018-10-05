@@ -79,4 +79,10 @@ clojure.lein_send_visual = function()
   return
 end
 
+clojure.test_current_file = function()
+  data = "(clojure.test/run-tests '" .. utils.get_ns() .. ")"
+  iron.ll.send_to_repl("clojure", data)
+  return
+end
+
 return clojure
