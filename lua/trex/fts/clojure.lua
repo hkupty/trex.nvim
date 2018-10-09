@@ -49,6 +49,12 @@ clojure.switch_ns = function()
   return
 end
 
+clojure.switch_to_user_ns = function()
+  data = "(in-ns 'user)"
+  iron.ll.send_to_repl("clojure", data)
+  return
+end
+
 clojure.lein_require = function()
   data = "(require '" .. utils.get_current_parens() .. ")"
   iron.ll.send_to_repl("clojure", data)
