@@ -1,6 +1,8 @@
 command! -nargs=0 TrexFlush lua require("trex").flush()
+command! -nargs=0 TrexClearHistory lua require("trex").clear_history()
 command! -nargs=0 TrexNext lua require("trex").next()
 command! -nargs=0 TrexPrev lua require("trex").previous()
+command! -nargs=0 TrexReset lua require("trex").reset()
 command! -nargs=0 TrexInvoke lua require("trex").invoke()
 command! -nargs=? TrexAttach lua require("trex").attach(<f-args>)
 
