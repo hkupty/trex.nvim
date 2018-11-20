@@ -6,6 +6,7 @@ command! -nargs=0 TrexReset lua require("trex").reset()
 command! -nargs=0 TrexInvoke lua require("trex").invoke()
 command! -nargs=? TrexAttach lua require("trex").attach(<f-args>)
 
+" TODO Remove in favor of luacmd
 autocmd Filetype clojure nmap <buffer> <leader>so :lua require ("trex").fts.clojure.require_ns()<CR>
 autocmd Filetype clojure nmap <buffer> <leader>si :lua require ("trex").fts.clojure.lein_import()<CR>
 autocmd Filetype clojure nmap <buffer> <leader>sr :lua require ("trex").fts.clojure.lein_require_current_file()<CR>
