@@ -60,6 +60,7 @@ trex.ll.hist_nav = function(mv)
 end
 
 trex.attach = function(ft)
+  local session = math.random(10000, 99999)
 
   if ft == nil then
     _, ft = trex.ll.bufdata()
@@ -70,7 +71,7 @@ trex.attach = function(ft)
   nvim.nvim_command("belowright 8 new")
   nvim.nvim_command("setl wfh")
   nvim.nvim_command("setl nobuflisted buftype=nofile bufhidden=wipe ft=" .. ft)
-  nvim.nvim_command("mapc <buffer>")
+  nvim.nvim_command("file trex://" .. ft  .. "/" .. session)
   nvim.nvim_command("nmap <buffer> q <Cmd>q!<CR>")
 
   nvim.nvim_command("nmap <buffer> <Left> <Cmd>TrexPrev<CR>")
@@ -126,6 +127,17 @@ end
 
 trex.reset = function()
   return trex.ll.hist_nav(0)
+end
+
+trex.map_bindings = function()
+  local _, ft = trex.ll.bufdata()
+  local bindings = trex.fts[ft]
+
+  if bindings ~= nil then
+    for mapping, command in pairs(bindings.mappings) do
+      nvim.nvim_command("map <buffer> " .. mapping .. " <Cmd>lua require('trex').fts." .. ft .. "." .. command .. "()<CR>")
+    end
+  end
 end
 
 trex.debug = function()
