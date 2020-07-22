@@ -1,27 +1,26 @@
 local iron = require("iron")
+local forms = require("trex.forms")
 local nvim = vim.api
 local utils = {}
 
 utils.get_ns = function()
-  nvim.nvim_feedkeys("mxggf w\"syw`x", "x", "")
-  cmd_out = nvim.nvim_call_function("getreg",{"s"})
+  local lines = table.concat(
+    forms.extract(forms.get_ns_form_boundaries()),
+    " ")
+  -- TODO make it secure against
+  --    ^:metadata
+  --    "docstring"
+  local match = [[ns ([^()':" ]+)]]
 
-  return cmd_out
+  return lines:match(match)
 end
 
 utils.get_current_parens = function()
-  nvim.nvim_feedkeys("mx%\"sy%`x", "x", "")
-  cmd_out = nvim.nvim_call_function("getreg",{"s"})
-
-  return cmd_out
+  return table.concat(forms.form_under_cursor(), " ")
 end
 
 utils.get_outer_parens = function()
-  nvim.nvim_feedkeys("mx?^(\\"sya(`x'", "x", "")
-  nvim.nvim_command("nohl")
-
-  cmd_out = nvim.nvim_call_function("getreg",{"s"})
-  return cmd_out
+  return table.concat(forms.form_under_cursor(true), " ")
 end
 
 utils.get_visual = function()
@@ -32,14 +31,12 @@ utils.get_visual = function()
 end
 
 clojure = {
+get_ns = utils.get_ns,
   fn = {}
 }
 
 clojure.fn.require_ns = function()
-  nvim.nvim_feedkeys("mx%\"sy%`x", "x", "")
-  cmd_out = nvim.nvim_call_function("getreg",{"s"})
-
-  data = "(require '" .. cmd_out .. ")"
+  data = "(require '[" .. utils.get_ns() .. "])"
   iron.ll.send_to_repl("clojure", data)
   return
 end
@@ -63,7 +60,7 @@ clojure.fn.lein_require = function()
 end
 
 clojure.fn.lein_require_current_file = function()
-  data = "(require '" .. utils.get_ns() .. " :reload)"
+  data = "(require '[" .. utils.get_ns() .. " :reload])"
   iron.ll.send_to_repl("clojure", data)
   return
 end
