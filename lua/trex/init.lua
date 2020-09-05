@@ -108,6 +108,7 @@ trex.flush = function()
 
   if trex.data.cursor == 0 or not utils.all_equals(trex.data.history[trex.data.cursor], buff) then
     table.insert(trex.data.history, buff)
+    trex.data.cursor = trex.data.cursor + 1
   end
   nvim.nvim_buf_set_lines(cb, 0, lines, false, {})
 end
