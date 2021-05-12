@@ -136,7 +136,14 @@ trex.map_bindings = function()
 
   if bindings ~= nil then
     for mapping, command in pairs(bindings.mappings) do
-      nvim.nvim_command("map <buffer> " .. mapping .. " <Cmd>lua require('trex').fts." .. ft .. "." .. command .. "()<CR>")
+      nvim.nvim_command(
+      "map <buffer> " ..
+      mapping ..
+      " <Cmd>lua require('trex').fts." ..
+      ft ..
+      "." ..
+      command ..
+      "()<CR>")
     end
   end
 end
