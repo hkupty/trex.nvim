@@ -61,23 +61,23 @@ trex.attach = function(ft)
 
   iron.core.focus_on(ft)
 
-  vim.api.nvim_command("belowright 8 new")
-  vim.api.nvim_command("setl wfh")
-  vim.api.nvim_command("setl nobuflisted buftype=nofile bufhidden=wipe ft=" .. ft)
-  vim.api.nvim_command("file trex://" .. ft  .. "/" .. session)
-  vim.api.nvim_command("nmap <buffer> q <Cmd>q!<CR>")
+  vim.cmd[[belowright 8 new]]
+  vim.cmd[[setl wfh]]
+  vim.cmd("setl nobuflisted buftype=nofile bufhidden=wipe ft=" .. ft)
+  vim.cmd("file trex://" .. ft  .. "/" .. session)
+  vim.cmd[[nmap <buffer> q <Cmd>q!<CR>]]
 
-  vim.api.nvim_command("nmap <buffer> <Left> <Cmd>TrexPrev<CR>")
-  vim.api.nvim_command("nmap <buffer> <Right> <Cmd>TrexNext<CR>")
-  vim.api.nvim_command("nmap <buffer> <Up> <Cmd>TrexReset<CR>")
-  vim.api.nvim_command("nmap <buffer> <S-Up> <Cmd>TrexClearHistory<CR>")
-  vim.api.nvim_command("nmap <buffer> <localleader><CR> <Cmd>TrexFlush<CR>")
+  vim.cmd[[nmap <buffer> <Left> <Cmd>TrexPrev<CR>]]
+  vim.cmd[[nmap <buffer> <Right> <Cmd>TrexNext<CR>]]
+  vim.cmd[[nmap <buffer> <Up> <Cmd>TrexReset<CR>]]
+  vim.cmd[[nmap <buffer> <S-Up> <Cmd>TrexClearHistory<CR>]]
+  vim.cmd[[nmap <buffer> <localleader><CR> <Cmd>TrexFlush<CR>]]
 
-  vim.api.nvim_command("imap <buffer> <S-Left> <Cmd>TrexPrev<CR>")
-  vim.api.nvim_command("imap <buffer> <S-Right> <Cmd>TrexNext<CR>")
-  vim.api.nvim_command("imap <buffer> <S-Up> <Cmd>TrexReset<CR>")
-  vim.api.nvim_command("imap <buffer> <S-Up> <Cmd>TrexClearHistory<CR>")
-  vim.api.nvim_command("imap <buffer> <S-CR> <Cmd>TrexFlush<CR>")
+  vim.cmd[[imap <buffer> <S-Left> <Cmd>TrexPrev<CR>]]
+  vim.cmd[[imap <buffer> <S-Right> <Cmd>TrexNext<CR>]]
+  vim.cmd[[imap <buffer> <S-Up> <Cmd>TrexReset<CR>]]
+  vim.cmd[[imap <buffer> <S-Up> <Cmd>TrexClearHistory<CR>]]
+  vim.cmd[[imap <buffer> <S-CR> <Cmd>TrexFlush<CR>]]
 end
 
 trex.invoke = function()
@@ -130,7 +130,7 @@ trex.map_bindings = function()
 
   if bindings ~= nil then
     for mapping, command in pairs(bindings.mappings) do
-      vim.api.nvim_command(
+      vim.cmd(
       "map <buffer> " ..
       mapping ..
       " <Cmd>lua require('trex').fts." ..
