@@ -31,7 +31,7 @@ trex.ll.bufdata = function()
   local cb = nvim.nvim_get_current_buf()
   local ft = nvim.nvim_buf_get_option(cb, 'filetype')
 
-  return cb, ft
+  return ft, cb
 end
 
 trex.ll.hist_nav = function(mv)
@@ -63,7 +63,7 @@ trex.attach = function(ft)
   local session = math.random(10000, 99999)
 
   if ft == nil then
-    _, ft = trex.ll.bufdata()
+    ft = trex.ll.bufdata()
   end
 
   iron.core.focus_on(ft)
@@ -88,14 +88,14 @@ trex.attach = function(ft)
 end
 
 trex.invoke = function()
-  local _, ft = trex.ll.bufdata()
+  local ft = trex.ll.bufdata()
 
   iron.ll.ensure_repl_exists(ft)
   trex.attach(ft)
 end
 
 trex.flush = function()
-  local cb, ft = trex.ll.bufdata()
+  local ft, cb = trex.ll.bufdata()
 
   local lines = nvim.nvim_buf_line_count(cb)
   local buff = nvim.nvim_buf_get_lines(cb, 0, lines, false)
@@ -131,7 +131,7 @@ trex.reset = function()
 end
 
 trex.map_bindings = function()
-  local _, ft = trex.ll.bufdata()
+  local ft = trex.ll.bufdata()
   local bindings = trex.fts[ft]
 
   if bindings ~= nil then
